@@ -7,23 +7,15 @@ package distribuidos;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 
 /**
  *
  * @author amanda
  */
-public class BolsaTarefas extends UnicastRemoteObject{
+public class Mestre extends UnicastRemoteObject{
     
-    public ArrayList<EstacoesTrabalho> estacoesConectadas = new ArrayList<>();
-    public static ArrayList<Tarefa> tarefas = new ArrayList();
-    
-    protected BolsaTarefas() throws RemoteException{
+    public Mestre() throws RemoteException{
         super();
     }
-
-    
 }

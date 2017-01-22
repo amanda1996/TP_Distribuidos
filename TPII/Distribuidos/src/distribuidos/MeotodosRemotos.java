@@ -21,5 +21,5 @@ public interface MeotodosRemotos extends Remote{
     
     public HashMap<String,Object> leTarefa(int chave) throws RemoteException;
     
-    public HashMap<String, Object> calculaProduto(HashMap<String, Object>) throws RemoteException;
+    public Tarefa calculaProduto(Tarefa tarefa) throws RemoteException;
 }
