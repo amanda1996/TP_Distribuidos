@@ -54,6 +54,13 @@ public class Tarefa implements Serializable,Comparable<Tarefa>{
     }
 
     @Override
+    public String toString() {
+        return "chave: " + this.getChave() + "status: " + this.getStatus();
+    }
+    
+    
+
+    @Override
     public int compareTo(Tarefa tarefa) {
         if(this.chave < tarefa.chave){
             return -1;

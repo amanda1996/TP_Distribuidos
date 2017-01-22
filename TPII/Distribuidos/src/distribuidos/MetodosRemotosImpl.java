@@ -26,7 +26,7 @@ public class MetodosRemotosImpl implements MetodosRemotos {
     @Override
     public void adicionaTarefa(Tarefa tarefa) throws RemoteException {
         BolsaTarefas.tarefas.add(tarefa);
-        System.out.println("tarefa adicionada! chave:" + tarefa.getChave());
+        System.out.println("tarefa adicionada!" + tarefa.toString());
     }
 
     @Override

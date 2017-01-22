@@ -48,17 +48,23 @@ public class Mestre extends UnicastRemoteObject {
             int resto = matriz1[0].length % qtd;
 
             int aux = 0;
+            System.out.println("qtd: " + qtd);
             for (int a = 0; a < qtd; a++) {
+                linhas = new ArrayList<>();
                 while (aux < qtdLinhasPorTarefa) {
-                    System.out.println("Linha " + aux + ": ");
+                    System.out.println("Linha " + aux + ": \na: " + a);
                     ArrayList<Integer> linha = new ArrayList<>();
                     for (int j = 0; j < matriz1[1].length; j++) {
-                        System.out.println(matriz1[aux][j] + " ");
-                        linha.add(j,matriz1[aux][j]);
+//                        System.out.println("j: " + j);
+//                        System.out.println(matriz1[aux][j] + " ");
+//                        System.out.println("tamanho linha: " + linha.size());
+                        linha.add(matriz1[aux][j]);
                     }
                     linhas.add(linha);
                     aux++;
                 }
+                //aux tem que ser incrementado pq senao chega uma hora que a qtdLinhasPorTarefa vai ser sempre menor
+                qtdLinhasPorTarefa += aux;
                 HashMap<String, Object> descricao = new HashMap<>();
                 descricao.put("linhas", linhas);
                 descricao.put("matriz", matriz2);
