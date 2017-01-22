@@ -14,31 +14,69 @@ import java.util.HashMap;
  *
  * @author amanda
  */
-public class MetodosRemotosImpl implements MeotodosRemotos {
+public class MetodosRemotosImpl implements MetodosRemotos {
+//    ArrayList<Tarefa> arrayTarefasLocais = new ArrayList<>();
+    
+//    public ArrayList<Tarefa> transporteArray(ArrayList<Tarefa> tarefas, ArrayList<Tarefa> updatetarefas){
+//        tarefas = updatetarefas;
+//        arrayTarefasLocais = tarefas;
+//        return arrayTarefasLocais;
+//    }
 
     @Override
-    public void adicionaTarefa(int chave, HashMap<String, Object> descricao) throws RemoteException {
-        Tarefa tarefa = new Tarefa(chave, descricao);
+    public void adicionaTarefa(Tarefa tarefa) throws RemoteException {
         BolsaTarefas.tarefas.add(tarefa);
+        System.out.println("tarefa adicionada! chave:" + tarefa.getChave());
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public HashMap<String, Object> removeTarefa(int chave) throws RemoteException {
-        int indice = encontraTarefa(chave);
+        int indice = buscaBinaria(chave);
         Tarefa tarefa = BolsaTarefas.tarefas.get(indice);
         BolsaTarefas.tarefas.remove(indice);
         return tarefa.getDescricao();
     }
 
     @Override
-    public HashMap<String, Object> leTarefa(int chave) throws RemoteException {
-        int indice = encontraTarefa(chave);
-        Tarefa tarefa = BolsaTarefas.tarefas.get(indice);
-        return tarefa.getDescricao();
+    public Tarefa leTarefa() throws RemoteException {
+        int indice = encontraTarefaDisponivel();
+        if (indice != -1) {
+            Tarefa tarefa = BolsaTarefas.tarefas.get(indice);
+            BolsaTarefas.tarefas.get(indice).setStatus(1);
+            return tarefa;
+        } else {
+            return null;
+        }
     }
 
-    private int encontraTarefa(int chave) {
+    @Override
+    public void atualizaTarefa(Tarefa tarefa) throws RemoteException {
+        int indice = buscaBinaria(tarefa.getChave());
+        BolsaTarefas.tarefas.get(indice).setDescricao(tarefa.getDescricao());
+        BolsaTarefas.tarefas.get(indice).setStatus(2);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public boolean terminouTarefas() throws RemoteException {
+        if (BolsaTarefas.tarefas.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private int encontraTarefaDisponivel() {
+        for (int i = 0; i < BolsaTarefas.tarefas.size(); i++) {
+            if (BolsaTarefas.tarefas.get(i).getStatus() == 0) {
+                return BolsaTarefas.tarefas.get(i).getStatus();
+            }
+        }
+        return -1;
+    }
+
+    private int buscaBinaria(int chave) {
         int esq, dir, meio;
         esq = 0;
         dir = BolsaTarefas.tarefas.size() - 1;
@@ -70,15 +108,15 @@ public class MetodosRemotosImpl implements MeotodosRemotos {
                 for (int k = 0; k < linha.size(); k++) {
                     somatorio += linha.get(k) * matriz[k][j];
                 }
-            linhaRet.add(somatorio);
+                linhaRet.add(somatorio);
             }
             linhasRet.add(linhaRet);
         }
-        HashMap<String,Object> hRetorno = new HashMap<>();
-        hRetorno.put("resultado", linhasRet);
+        HashMap<String, Object> hRetorno = new HashMap<>();
+        hRetorno.put("linhas", linhasRet);
         tarefaRetorno.setChave(tarefa.getChave());
         tarefaRetorno.setDescricao(hRetorno);
-        
+
         return tarefaRetorno;
     }
 

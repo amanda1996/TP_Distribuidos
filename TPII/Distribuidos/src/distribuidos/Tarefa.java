@@ -14,6 +14,7 @@ import java.util.HashMap;
  */
 public class Tarefa implements Serializable,Comparable<Tarefa>{
     int chave;
+    int status;
     HashMap<String, Object> descricao;//2 objetos: ArrayList de vetor representando as linhas e a 2ª matriz
     
     
@@ -21,11 +22,11 @@ public class Tarefa implements Serializable,Comparable<Tarefa>{
         
     }
 
-    public Tarefa(int chave, HashMap<String, Object> descricao) {
+    public Tarefa(int chave, int status, HashMap<String, Object> descricao) {
         this.chave = chave;
+        this.status = status;
         this.descricao = descricao;
-    }
-    
+    }  
 
     public int getChave() {
         return chave;
@@ -34,6 +35,15 @@ public class Tarefa implements Serializable,Comparable<Tarefa>{
     public void setChave(int chave) {
         this.chave = chave;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
 
     public HashMap<String, Object> getDescricao() {
         return descricao;
