@@ -36,6 +36,7 @@ public class Mestre extends UnicastRemoteObject {
     }
 
     public static void main(String[] args) {
+        System.out.println("tamanho: " + args.length);
         String host = (args.length == 0) ? null : args[0];
         try {
             registry = LocateRegistry.getRegistry(host);
@@ -49,9 +50,11 @@ public class Mestre extends UnicastRemoteObject {
             int aux = 0;
             for (int a = 0; a < qtd; a++) {
                 while (aux < qtdLinhasPorTarefa) {
+                    System.out.println("Linha " + aux + ": ");
                     ArrayList<Integer> linha = new ArrayList<>();
                     for (int j = 0; j < matriz1[1].length; j++) {
-                        linha.add(matriz1[aux][j]);
+                        System.out.println(matriz1[aux][j] + " ");
+                        linha.add(j,matriz1[aux][j]);
                     }
                     linhas.add(linha);
                     aux++;

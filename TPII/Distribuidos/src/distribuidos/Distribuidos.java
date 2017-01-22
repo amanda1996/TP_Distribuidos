@@ -26,6 +26,9 @@ public class Distribuidos {
         int qtdSubTarefas = 2;
 
         Mestre mestre = new Mestre(matriz1, matriz2, qtdSubTarefas);
+        String[] s = new String[1];
+        s[0] = "127.0.0.1";
+        Mestre.main(s);
 
     }
 

@@ -27,7 +27,6 @@ public class MetodosRemotosImpl implements MetodosRemotos {
     public void adicionaTarefa(Tarefa tarefa) throws RemoteException {
         BolsaTarefas.tarefas.add(tarefa);
         System.out.println("tarefa adicionada! chave:" + tarefa.getChave());
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
