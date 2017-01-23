@@ -21,8 +21,9 @@ import java.util.HashMap;
  */
 public class BolsaTarefas  {
 
-    public ArrayList<EstacoesTrabalho> estacoesConectadas = new ArrayList<>();
+    public static int cont = 0;
     public static ArrayList<Tarefa> tarefas = new ArrayList();
+    public static boolean estacaoConectada;
 
     protected BolsaTarefas() throws RemoteException {
         super();
@@ -45,6 +46,8 @@ public class BolsaTarefas  {
         }
 
     }
+    
+    
 
 //    public void transportaTarefas(ArrayList<Tarefa> updateTarefas) {
 //        MetodosRemotosImpl metodos = new MetodosRemotosImpl();

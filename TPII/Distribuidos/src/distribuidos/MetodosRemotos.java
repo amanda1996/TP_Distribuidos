@@ -19,7 +19,7 @@ public interface MetodosRemotos extends Remote{
         
     public void adicionaTarefa(Tarefa tarefa) throws RemoteException;
     
-    public HashMap<String,Object> removeTarefa(int chave) throws RemoteException;
+    public Tarefa removeTarefa() throws RemoteException;
     
     public Tarefa leTarefa() throws RemoteException;
     
@@ -28,4 +28,10 @@ public interface MetodosRemotos extends Remote{
     public boolean terminouTarefas() throws RemoteException;
     
     public Tarefa calculaProduto(Tarefa tarefa) throws RemoteException;
+    
+    public boolean estacaoConectada() throws RemoteException;
+    
+    public void conectaEstacao() throws RemoteException;
+    
+    public void desconectaEstacao() throws RemoteException;
 }

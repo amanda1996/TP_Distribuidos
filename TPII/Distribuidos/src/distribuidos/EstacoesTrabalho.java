@@ -5,6 +5,7 @@
  */
 package distribuidos;
 
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,14 +29,14 @@ public class EstacoesTrabalho extends UnicastRemoteObject {
     }
 
     public static void main(String[] args) {
-        String host = (args.length == 0) ? null : args[0];
+        String host = "127.0.0.1";
 
         try {
             registry = LocateRegistry.getRegistry(host);
 
             metodos = (MetodosRemotos) registry.lookup("Metodos");
 
-            Runnable runnable = new EsperaTarefas();
+            EsperaTarefas runnable = new EsperaTarefas();
             Thread thread = new Thread(runnable);
             thread.start();
 
@@ -50,21 +51,41 @@ public class EstacoesTrabalho extends UnicastRemoteObject {
 
         @Override
         public void run() {
+            System.out.println("entrou thread");
             try {
-                while (metodos.terminouTarefas()) {
+                metodos.conectaEstacao();
+                while (!metodos.terminouTarefas()) {
+                    if (metodos.estacaoConectada()) {
+                        System.out.println("tem estacao conectada");
+                    }
+                    System.out.println("entrou while");
                     Tarefa t = metodos.leTarefa();
-                    Tarefa tarefaConcluida = new Tarefa();
                     if (t != null) {
-                        tarefaConcluida = metodos.calculaProduto(t);
-                        metodos.atualizaTarefa(tarefaConcluida);
+                        System.out.println("tarefa lida: \nchave: " + t.toString());
+                        int[][] matriz = (int[][]) t.getDescricao().get("matriz");
+                        for (int i = 0; i < matriz[0].length; i++) {
+                            System.out.print("[");
+                            for (int j = 0; j < matriz[1].length; j++) {
+                                System.out.print(matriz[i][j] + " ");
+                            }
+                            System.out.print("]\n");
+                        }
+                        Tarefa tarefaConcluida = new Tarefa();
+                        if (t != null) {
+                            tarefaConcluida = metodos.calculaProduto(t);
+                            metodos.atualizaTarefa(tarefaConcluida);
+                        }
                     }
                 }
-
             } catch (RemoteException ex) {
-                Logger.getLogger(EstacoesTrabalho.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    System.out.println("desconectando estacao...");
+                    metodos.desconectaEstacao();
+                } catch (RemoteException ex1) {
+                    Logger.getLogger(EstacoesTrabalho.class.getName()).log(Level.SEVERE, null, ex1);
+                    System.out.println("Conexão recusada!");
+                }
             }
-
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
     }
